@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  background: #0d1117;
+  color: #00ff88;
+  font-family: "Courier New", monospace;
+}
+
+#terminal {
+  padding: 20px;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.input-line {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.prompt {
+  white-space: nowrap;
+}
+
+input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #00ff88;
+  font-family: inherit;
+  font-size: 16px;
+}
