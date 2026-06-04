@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Terminal Portfolio</title>
-  <link rel="stylesheet" href="css/style.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:; font-src 'self';">
+    <title>Sadman Bin Morshed</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-  <div id="terminal">
-
-    <div id="output"></div>
-
-    <div class="input-line">
-      <span class="prompt">visitor@portfolio:~$</span>
-      <input id="commandInput" type="text" autofocus autocomplete="off" />
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <div class="traffic-lights">
+                <div class="traffic-light close"></div>
+                <div class="traffic-light minimize"></div>
+                <div class="traffic-light maximize"></div>
+            </div>
+            <div class="terminal-title">Terminal</div>
+        </div>
+        <div class="terminal-body" id="terminal">
+            <!-- Terminal content will be generated dynamically -->
+        </div>
     </div>
 
-  </div>
+    <div class="dock-icon" id="dockIcon" title="Open Terminal"></div>
 
-  <script src="js/terminal.js"></script>
+    <footer class="footer">
+        <p> <a href="https://github.com/Phonkboisad" target="_blank" rel="noopener noreferrer">My Github </a>!</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
