@@ -639,6 +639,33 @@ class TerminalApp {
 
     // Event listeners
     setupEventListeners() {
+        const commandInput = document.getElementById('commandInput');
+        
+        // Handle keyboard input from the hidden input
+        if (commandInput) {
+            commandInput.addEventListener('input', (e) => {
+                this.currentCommand = e.target.value;
+                this.updateCursor();
+                e.target.value = '';
+            });
+            
+            commandInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.executeCommand(this.currentCommand);
+                    this.currentCommand = '';
+                    e.target.value = '';
+                } else if (e.key === 'Backspace') {
+                    e.preventDefault();
+                    this.currentCommand = this.currentCommand.slice(0, -1);
+                    this.updateCursor();
+                } else if (e.key === 'Tab') {
+                    e.preventDefault();
+                    this.autoComplete();
+                }
+            });
+        }
+        
         document.addEventListener('keydown', (e) => this.handleKeyboard(e));
         this.terminal.addEventListener('click', () => this.focusInput());
         this.setupTrafficLights();
@@ -651,23 +678,10 @@ class TerminalApp {
     }
 
     handleKeyboard(e) {
+        // Focus the hidden input to ensure it remains focused
         const commandInput = document.getElementById('commandInput');
-        if (commandInput) {
+        if (commandInput && document.activeElement !== commandInput) {
             commandInput.focus();
-        }
-        
-        if (e.key === 'Enter') {
-            this.executeCommand(this.currentCommand);
-            this.currentCommand = '';
-        } else if (e.key === 'Backspace') {
-            this.currentCommand = this.currentCommand.slice(0, -1);
-            this.updateCursor();
-        } else if (e.key === 'Tab') {
-            e.preventDefault();
-            this.autoComplete();
-        } else if (e.key.length === 1) {
-            this.currentCommand += e.key;
-            this.updateCursor();
         }
     }
 
@@ -675,6 +689,7 @@ class TerminalApp {
         const commandInput = document.getElementById('commandInput');
         if (commandInput) {
             commandInput.focus();
+            commandInput.value = '';
         }
     }
 
@@ -772,17 +787,11 @@ class TerminalApp {
         // Create the input line
         this.createPromptLine();
         
-        // Create hidden input for keyboard handling
-        const commandInput = document.createElement('input');
-        commandInput.type = 'text';
-        commandInput.id = 'commandInput';
-        commandInput.style.opacity = '0';
-        commandInput.style.position = 'absolute';
-        commandInput.style.left = '-9999px';
-        document.body.appendChild(commandInput);
-        
-        // Focus on input
-        commandInput.focus();
+        // Focus on the hidden input for keyboard handling
+        const commandInput = document.getElementById('commandInput');
+        if (commandInput) {
+            commandInput.focus();
+        }
         
         // Initialize draggable functionality
         this.initializeDraggable();
