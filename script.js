@@ -644,7 +644,9 @@ class TerminalApp {
         // Handle keyboard input from the hidden input
         if (commandInput) {
             commandInput.addEventListener('input', (e) => {
-                this.currentCommand = e.target.value;
+                const inputValue = e.target.value;
+                // Append new characters to currentCommand
+                this.currentCommand += inputValue;
                 this.updateCursor();
                 e.target.value = '';
             });
