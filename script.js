@@ -5,8 +5,13 @@ class TerminalApp {
         this.currentCommand = '';
         this.commands = this.initializeCommands();
         
+        // Multi-tab support
+        this.tabs = [];
+        this.currentTabId = null;
+        this.tabIdCounter = 0;
+        
         this.setupEventListeners();
-        this.initializeTerminal();
+        this.createNewTab('Tab 1');
     }
 
     initializeCommands() {
@@ -22,8 +27,89 @@ class TerminalApp {
             'clear': () => this.clearTerminal(),
             'whoami': () => this.showWhoAmI(),
             'contacts': () => this.showContacts(),
+            'git': () => this.openGithub(),
+            'cd ..': () => this.tellJoke(),
+            'ls': () => this.listProjects(),
+            'pwd': () => this.showCurrentDirectory(),
+            'echo': () => this.showMotivation(),
+            'about': () => this.showAbout(),
+            'close': () => this.closeBrowserTab(),
+            'exit': () => this.closeBrowserTab(),
+            'quit': () => this.closeBrowserTab(),
             'help': () => this.showHelp()
         };
+    }
+
+    // Multi-tab functionality
+    createNewTab(tabName = null) {
+        const tabId = `tab-${this.tabIdCounter++}`;
+        const name = tabName || `Tab ${this.tabs.length + 1}`;
+        
+        this.tabs.push({
+            id: tabId,
+            name: name,
+            content: ''
+        });
+        
+        this.currentTabId = tabId;
+        this.renderTabs();
+        this.clearTerminalContent();
+        this.initializeTerminal();
+    }
+
+    switchTab(tabId) {
+        this.currentTabId = tabId;
+        this.renderTabs();
+        this.updateTerminalDisplay();
+    }
+
+    closeTab(tabId) {
+        if (this.tabs.length === 1) {
+            alert('Cannot close the last tab!');
+            return;
+        }
+        
+        const index = this.tabs.findIndex(t => t.id === tabId);
+        this.tabs.splice(index, 1);
+        
+        if (this.currentTabId === tabId) {
+            this.currentTabId = this.tabs[0].id;
+        }
+        
+        this.renderTabs();
+        this.updateTerminalDisplay();
+    }
+
+    renderTabs() {
+        const tabsContainer = document.getElementById('tabsContainer');
+        tabsContainer.innerHTML = '';
+        
+        this.tabs.forEach(tab => {
+            const tabEl = document.createElement('div');
+            tabEl.className = `tab ${tab.id === this.currentTabId ? 'active' : ''}`;
+            tabEl.innerHTML = `
+                <span class="tab-name">${tab.name}</span>
+                <span class="tab-close" data-tab-id="${tab.id}">✕</span>
+            `;
+            
+            tabEl.querySelector('.tab-name').addEventListener('click', () => this.switchTab(tab.id));
+            tabEl.querySelector('.tab-close').addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.closeTab(tab.id);
+            });
+            
+            tabsContainer.appendChild(tabEl);
+        });
+    }
+
+    updateTerminalDisplay() {
+        this.terminal = document.getElementById('terminal');
+        this.clearTerminalContent();
+        this.initializeTerminal();
+    }
+
+    clearTerminalContent() {
+        this.terminal.innerHTML = '';
     }
 
     // Command implementations
@@ -135,9 +221,109 @@ class TerminalApp {
 
     showWhoAmI() {
         this.addOutput('='.repeat(60), 'separator');
-        this.addOutput('💻 Your Name - Your Title', 'header');
+        this.addOutput('👤 ABOUT ME', 'header');
         this.addOutput('='.repeat(60), 'separator');
         this.addOutput('');
+        this.addOutput('Name: Sadman Bin Morshed', 'title');
+        this.addOutput('Title: Cybersecurity Enthusiast | CSE Undergraduate', 'subtitle');
+        this.addOutput('');
+        this.addOutput('Bio:', 'detail');
+        this.addOutput(cvData.overview, 'detail');
+        this.addOutput('');
+    }
+
+    openGithub() {
+        this.addOutput('='.repeat(60), 'separator');
+        this.addOutput('🔗 OPENING GITHUB', 'header');
+        this.addOutput('='.repeat(60), 'separator');
+        this.addOutput('');
+        this.addOutput('Opening GitHub profile in new tab...', 'detail');
+        this.addOutput('');
+        window.open('https://github.com/Phonkboisad', '_blank');
+    }
+
+    tellJoke() {
+        const jokes = [
+            'Why did the programmer quit his job? Because he didn\'t get arrays.',
+            'How many programmers does it take to change a light bulb? None, that\'s a hardware problem!',
+            'Why do programmers prefer dark mode? Because light attracts bugs!',
+            'Why did the developer go broke? He used up all his cache!',
+            'How do you know if there\'s a developer in your house? Don\'t worry, he\'ll tell you!',
+            'Why did the cybersecurity expert lock the door? Because she wasn\'t taking any chances!'
+        ];
+        const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+        
+        this.addOutput('='.repeat(60), 'separator');
+        this.addOutput('😂 DISK ERROR MESSAGE', 'header');
+        this.addOutput('='.repeat(60), 'separator');
+        this.addOutput('');
+        this.addOutput(randomJoke, 'detail');
+        this.addOutput('');
+    }
+
+    listProjects() {
+        this.addOutput('='.repeat(60), 'separator');
+        this.addOutput('📁 MY PROJECTS', 'header');
+        this.addOutput('='.repeat(60), 'separator');
+        this.addOutput('');
+        this.addOutput('1. Student CGPA Management System', 'title');
+        this.addOutput('   Repository: https://github.com/Phonkboisad/CGPA-stats', 'subtitle');
+        this.addOutput('   A robust console-based management system in Pure C', 'detail');
+        this.addOutput('   Features: CGPA calculation, ranking, data visualization', 'detail');
+        this.addOutput('');
+    }
+
+    showCurrentDirectory() {
+        this.addOutput('='.repeat(60), 'separator');
+        this.addOutput('📍 CURRENT DIRECTORY', 'header');
+        this.addOutput('='.repeat(60), 'separator');
+        this.addOutput('');
+        this.addOutput('/home/sadman/portfolio', 'detail');
+        this.addOutput('');
+    }
+
+    showMotivation() {
+        const quotes = [
+            'Security is not a product, but a process. - Bruce Schneier',
+            'The only truly secure system is one that is powered off. - Unknown',
+            'Code is poetry written for computers. - Anonymous',
+            'Innovation distinguishes between a leader and a follower. - Steve Jobs',
+            'The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt',
+            'Every expert was once a beginner. - Ralph Waldo Emerson'
+        ];
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        
+        this.addOutput('='.repeat(60), 'separator');
+        this.addOutput('💡 MOTIVATIONAL QUOTE', 'header');
+        this.addOutput('='.repeat(60), 'separator');
+        this.addOutput('');
+        this.addOutput(randomQuote, 'detail');
+        this.addOutput('');
+    }
+
+    showAbout() {
+        this.addOutput('='.repeat(60), 'separator');
+        this.addOutput('ℹ️  QUICK INTRO', 'header');
+        this.addOutput('='.repeat(60), 'separator');
+        this.addOutput('');
+        this.addOutput('Name: Sadman Bin Morshed', 'title');
+        this.addOutput('Location: Chittagong, Bangladesh', 'detail');
+        this.addOutput('Email: c253125@ugrad.iiuc.ac.bd', 'detail');
+        this.addOutput('GitHub: https://github.com/Phonkboisad', 'detail');
+        this.addOutput('');
+    }
+
+    closeBrowserTab() {
+        this.addOutput('='.repeat(60), 'separator');
+        this.addOutput('👋 GOODBYE!', 'header');
+        this.addOutput('='.repeat(60), 'separator');
+        this.addOutput('');
+        this.addOutput('Closing window in 2 seconds...', 'detail');
+        this.addOutput('');
+        
+        setTimeout(() => {
+            window.close();
+        }, 2000);
     }
 
     showHelp() {
@@ -145,10 +331,22 @@ class TerminalApp {
         this.addOutput('AVAILABLE COMMANDS', 'header');
         this.addOutput('='.repeat(60), 'separator');
         this.addOutput('');
+        this.addOutput('📚 CV & PROFILE:', 'title');
         this.addOutput('  cv             - CV informations', 'detail');
         this.addOutput('  whoami         - Info about me', 'detail');
+        this.addOutput('  about          - Quick intro', 'detail');
+        this.addOutput('  contacts       - How to contact me', 'detail');
+        this.addOutput('');
+        this.addOutput('🛠️  FAVORITE COMMANDS:', 'title');
+        this.addOutput('  git            - Open GitHub in new tab', 'detail');
+        this.addOutput('  cd ..          - Tell a dev joke', 'detail');
+        this.addOutput('  ls             - List my projects', 'detail');
+        this.addOutput('  pwd            - Show current directory', 'detail');
+        this.addOutput('  echo           - Motivational quote', 'detail');
+        this.addOutput('');
+        this.addOutput('⚙️  UTILITIES:', 'title');
         this.addOutput('  clear          - Clear terminal', 'detail');
-        this.addOutput('  contacts      - How to contact me', 'detail');
+        this.addOutput('  close/exit/quit- Close the tab', 'detail');
         this.addOutput('  help           - Show available commands', 'detail');
         this.addOutput('');
     }
@@ -276,14 +474,14 @@ class TerminalApp {
             try {
                 this.commands[command]();
             } catch (error) {
-                this.addOutput('Error executing command');
+                this.addOutput('Error executing command', 'error');
                 console.error('Command execution error:', error);
             }
         } else if (command === '') {
             // Empty command
         } else {
-            this.addOutput(`Command not found: ${sanitizedCmd}`);
-            this.addOutput('Type "help" for available commands');
+            this.addOutput(`Command not found: ${sanitizedCmd}`, 'error');
+            this.addOutput('Type "help" for available commands', 'error');
         }
 
         if (!silent) {
@@ -444,6 +642,12 @@ class TerminalApp {
         document.addEventListener('keydown', (e) => this.handleKeyboard(e));
         this.terminal.addEventListener('click', () => this.focusInput());
         this.setupTrafficLights();
+        
+        // Tab add button
+        const tabAddBtn = document.getElementById('tabAddBtn');
+        if (tabAddBtn) {
+            tabAddBtn.addEventListener('click', () => this.createNewTab());
+        }
     }
 
     handleKeyboard(e) {
@@ -476,21 +680,30 @@ class TerminalApp {
 
     setupTrafficLights() {
         // Close button
-        document.querySelector('.close').addEventListener('click', () => {
-            if(confirm('Do you want to close the terminal?')) {
-                this.hideTerminal();
-            }
-        });
+        const closeBtn = document.getElementById('closeBtn');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                if(confirm('Do you want to close the terminal?')) {
+                    this.hideTerminal();
+                }
+            });
+        }
 
         // Minimize button
-        document.querySelector('.minimize').addEventListener('click', () => {
-            this.hideTerminal();
-        });
+        const minimizeBtn = document.getElementById('minimizeBtn');
+        if (minimizeBtn) {
+            minimizeBtn.addEventListener('click', () => {
+                this.hideTerminal();
+            });
+        }
 
         // Maximize button
-        document.querySelector('.maximize').addEventListener('click', () => {
-            this.toggleMaximize();
-        });
+        const maximizeBtn = document.getElementById('maximizeBtn');
+        if (maximizeBtn) {
+            maximizeBtn.addEventListener('click', () => {
+                this.toggleMaximize();
+            });
+        }
 
         // Dock icon
         document.getElementById('dockIcon').addEventListener('click', () => {
@@ -549,12 +762,12 @@ class TerminalApp {
     }
 
     initializeTerminal() {
-        // Execute initial commands
-        this.addCommandLine('whoami');
-        this.executeCommand('whoami', true);
-        
-        this.addCommandLine('help');
-        this.executeCommand('help', true);
+        // Show welcome message
+        this.addOutput('Welcome to Sadman Bin Morshed\'s Portfolio Terminal', 'header');
+        this.addOutput('='.repeat(60), 'separator');
+        this.addOutput('');
+        this.addOutput('💡 Tip: Type "help" to see available commands', 'detail');
+        this.addOutput('');
         
         // Create the input line
         this.createPromptLine();
@@ -570,6 +783,42 @@ class TerminalApp {
         
         // Focus on input
         commandInput.focus();
+        
+        // Initialize draggable functionality
+        this.initializeDraggable();
+    }
+    
+    initializeDraggable() {
+        const terminalWindow = document.querySelector('.terminal-window');
+        const terminalHeader = document.querySelector('.terminal-header');
+        let isDragging = false;
+        let currentX;
+        let currentY;
+        let initialX;
+        let initialY;
+        
+        terminalHeader.style.cursor = 'move';
+        
+        terminalHeader.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            initialX = e.clientX - terminalWindow.offsetLeft;
+            initialY = e.clientY - terminalWindow.offsetTop;
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+                
+                terminalWindow.style.position = 'fixed';
+                terminalWindow.style.left = currentX + 'px';
+                terminalWindow.style.top = currentY + 'px';
+            }
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
     }
 }
 

@@ -4,18 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:; font-src 'self';">
-    <title>Sadman Bin Morshed</title>
+    <title>Sadman Bin Morshed | Cybersecurity Enthusiast & CSE Undergraduate</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="terminal-window">
         <div class="terminal-header">
             <div class="traffic-lights">
-                <div class="traffic-light close"></div>
-                <div class="traffic-light minimize"></div>
-                <div class="traffic-light maximize"></div>
+                <button class="traffic-light close" id="closeBtn" title="Close"></button>
+                <button class="traffic-light minimize" id="minimizeBtn" title="Minimize"></button>
+                <button class="traffic-light maximize" id="maximizeBtn" title="Maximize"></button>
             </div>
             <div class="terminal-title">Terminal</div>
+        </div>
+        <div class="tabs-bar" id="tabsBar">
+            <div class="tabs-container" id="tabsContainer">
+                <!-- Tabs will be generated here -->
+            </div>
+            <button class="tab-add-btn" id="tabAddBtn" title="New Tab">+</button>
         </div>
         <div class="terminal-body" id="terminal">
             <!-- Terminal content will be generated dynamically -->

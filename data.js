@@ -1,82 +1,46 @@
 // CV Data Template
 const cvData = {
-    overview: `Your professional summary goes here. Describe your experience, skills, and what makes you unique. This should be a compelling overview of your background and expertise.`,
+    overview: `Cybersecurity enthusiast and Computer Science undergraduate at International Islamic University Chittagong. Passionate about building secure systems and exploring emerging technologies in the cybersecurity domain. Currently developing practical projects in system design, data management, and networking while building expertise in security tools and protocols.`,
     
     work: [
         {
-            title: "YOUR JOB TITLE",
-            company: "Company Name",
-            period: "MM/YYYY – MM/YYYY",
+            title: "Student CGPA Management System Developer",
+            company: "University Project",
+            period: "2024 – 2024",
             details: [
-                "Key achievement or responsibility 1",
-                "Key achievement or responsibility 2",
-                "Key achievement or responsibility 3",
-                "Key achievement or responsibility 4",
-                "Key achievement or responsibility 5",
-                "Tools: List your relevant tools and technologies"
-            ]
-        },
-        {
-            title: "PREVIOUS JOB TITLE",
-            company: "Previous Company",
-            period: "MM/YYYY – MM/YYYY",
-            details: [
-                "Key achievement or responsibility 1",
-                "Key achievement or responsibility 2",
-                "Key achievement or responsibility 3",
-                "Tools: List your relevant tools and technologies"
-            ]
-        },
-        {
-            title: "ANOTHER JOB TITLE",
-            company: "Another Company",
-            period: "MM/YYYY – MM/YYYY",
-            details: [
-                "Key achievement or responsibility 1",
-                "Key achievement or responsibility 2",
-                "Key achievement or responsibility 3",
-                "Tools: List your relevant tools and technologies"
+                "Designed and implemented a robust console-based student management system in Pure C",
+                "Implemented persistent data storage using file I/O with custom delimiter-based parsing",
+                "Developed automated CGPA calculation algorithm on 4.0 scale with letter grade assignment",
+                "Created data visualization features including ASCII-based grade distribution graphs",
+                "Implemented sorting algorithms (Bubble Sort) for ranked student analytics",
+                "Tools: C, CMake, File I/O, Data Structures, Windows & Linux compatible"
             ]
         }
     ],
     
     education: [
         {
-            degree: "YOUR DEGREE",
-            school: "Your University",
-            location: "Your Location",
-            grade: "Your Grade",
-            focus: "Your areas of focus and specialization"
-        },
-        {
-            degree: "YOUR PREVIOUS DEGREE",
-            school: "Your Previous University", 
-            location: "Your Location",
-            grade: "Your Grade",
-            focus: "Your areas of focus and courses"
-        },
-        {
-            degree: "CERTIFICATION OR PROGRAM",
-            school: "Institution Name",
-            location: "Location or Online",
-            grade: "Your achievements",
-            focus: "Skills and topics covered"
+            degree: "Bachelor of Science in Computer Science & Engineering (BSc CSE)",
+            school: "International Islamic University Chittagong",
+            location: "Chittagong, Bangladesh",
+            grade: "Undergraduate - In Progress",
+            focus: "Cybersecurity, System Design, Networking, Structural Programming, Database Management"
         }
     ],
     
     skills: {
-        "Category 1": ["Skill 1", "Skill 2", "Skill 3", "Skill 4", "Skill 5"],
-        "Category 2": ["Skill 1", "Skill 2", "Skill 3", "Skill 4", "Skill 5"],
-        "Category 3": ["Skill 1", "Skill 2", "Skill 3", "Skill 4", "Skill 5"],
-        "Category 4": ["Skill 1", "Skill 2", "Skill 3", "Skill 4", "Skill 5"],
-        "Category 5": ["Skill 1", "Skill 2", "Skill 3"]
+        "Programming Languages": ["C", "C++", "Java", "HTML", "CSS", "JavaScript"],
+        "Tools & Platforms": ["GitHub", "Cisco Packet Tracer", "Adobe Illustrator", "Adobe Photoshop", "CMake"],
+        "Specializations": ["Cybersecurity", "Networking", "System Design", "Data Structures"],
+        "Operating Systems": ["Linux (Basic Knowledge)", "Windows"],
+        "Concepts": ["Structural Programming", "File I/O", "Database Design", "Network Protocols"]
     },
     
-    languages: ["Your Language 1 (Proficiency)", "Your Language 2 (Proficiency)"],
+    languages: ["English (Fluent)", "Bangla (Native)"],
     
     contacts: {
-        email: "your.email@example.com",
-        linkedin: "https://www.linkedin.com/in/yourprofile/",
-        location: "Your Location"
+        email: "c253125@ugrad.iiuc.ac.bd",
+        github: "https://github.com/Phonkboisad",
+        location: "Chittagong, Bangladesh"
     }
 };
